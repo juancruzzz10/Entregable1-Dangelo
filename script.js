@@ -1,20 +1,26 @@
-let UsuarioGuardado = "admin";
-let password = "123";
-
-
-function HacerLogIn(){
-    let nombre = prompt("Ingrese un nombre de Usuario:")
-    let passw = prompt("Ingrese una contraseña")
-    if (nombre.toLowerCase() === UsuarioGuardado.toLowerCase() && passw === password){
-        console.log("Se ha ingresado correctamente");
-        return true;       
-    }else{
-        console.log("Usuario o contraseña incorrecta");
-        return false;
+function registrarUsuario(){
+    let nombre = prompt("Ingrese su nombre:")
+    let apellido = prompt("Ingrese su apellido:")       
+    let edad = prompt("Ingrese su edad:")
+    if(!nombre || !apellido || isNaN(edad)){
+        alert("Datos Invalidos. Intente nuevamente")
+        return null
     }
+    let usuario = {
+        nombre: nombre,
+        apellido: apellido,
+        edad: edad
+    };
+    console.log("Usuario Registrado Correctamente");
+    console.log("Nombre: "+ usuario.nombre);
+    console.log("Apellido: "+ usuario.apellido);
+    console.log("Edad: "+ usuario.edad);
+    alert("Bienvenido " + usuario.nombre + " " + usuario.apellido + "!");
+    return usuario
+  
 }
-let acceso = HacerLogIn()
-if (acceso){
+let usuario = registrarUsuario()
+if (usuario){
     let continuar = true 
     let carrito = []
     function agregarProducto(nombre, precio){
@@ -48,7 +54,7 @@ if (acceso){
         }
         mostrarCarrito()
 
-        let indice = parseInt(prompt("Ingrese el numero del producto que dsea eliminar:"))
+        let indice = parseInt(prompt("Ingrese el numero del producto que desea eliminar:"))
         if(indice >= 0  && indice < carrito.length){
             console.log("Eliminaste "+ carrito[indice].nombre);
             carrito.splice(indice, 1)            
@@ -65,9 +71,18 @@ if (acceso){
             return
         }
         let total = calcularTotal()
-        let confirmar = confirm("¿Desea realizar la compra? Total: $"+ total)
+        let metodoPago = prompt("Metodo de pago:\n 1)Efectivo (10% Descuento)\n 2)Transferencia (5% Descuento)\n 3)Otro (Sin Descuento)")
+        let descuento = 0;
+        if(metodoPago == '1'){
+            descuento = total * 0.10
+        }else if(metodoPago == '2'){
+            descuento = total * 0.05
+        }
+        let totalFinal = total - descuento
+
+        let confirmar = confirm("Total: $" + total + "\nDescuento: $" + descuento + "\nTotal a pagar: $" + totalFinal + "\n\n¿Desea confirmar la compra?")
         if(confirmar){
-            alert("Compra realizada con Exito. \nTotal a pagar: $"+ total)
+            alert("Compra realizada con Exito. \nTotal abonado: $"+ totalFinal)
             carrito = []
         }else{
             alert("Compra cancelada.")
@@ -77,7 +92,7 @@ if (acceso){
 
     while(continuar){
 
-    let eleccion = prompt("Ingrese alguna de las siguientes opciones para comprar: \n 1)Capacitor \n 2)Enchufe 220V \n 3)Multimetro \n 4)Protoboard \n 5)Diodo LED \n 6)Circuito Integrado \n 7)Soldador \n 8)Estaño \n 9)Ver total \n 10)Vaciar carrito \n 11)Finalizar compra \n 12)Eliminar Producto \n 13)Salir")
+    let eleccion = prompt("Ingrese alguna de las siguientes opciones para comprar: \n 1)Capacitor $10000 \n 2)Enchufe 220V $20800 \n 3)Multimetro $17300 \n 4)Protoboard $2600 \n 5)Diodo LED $88 \n 6)Circuito Integrado $1700 \n 7)Soldador $17000 \n 8)Estaño \n 9)Ver total \n 10)Vaciar carrito \n 11)Finalizar compra \n 12)Eliminar Producto \n 13)Salir")
 
     switch(eleccion){
         case '1':
