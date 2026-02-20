@@ -16,21 +16,59 @@ function HacerLogIn(){
 let acceso = HacerLogIn()
 if (acceso){
     let continuar = true 
-    let carrito = 0
+    let carrito = []
     function agregarProducto(nombre, precio){
-        carrito += precio
+        carrito.push({nombre: nombre, precio: precio})
         console.log("Añadiste un "+ nombre);
     }
 
+    function calcularTotal(){
+        let total = 0
+        for (let producto of carrito){
+            total += producto.precio
+        }
+        return total
+
+    }
+    function mostrarCarrito(){
+        if(carrito.length === 0){
+            console.log("El carrito esta vacio");
+            return
+        }
+        for(let i=0; i < carrito.length; i++){
+            console.log(i +" - "+ carrito[i].nombre + " $"+ carrito[i].precio);
+        }
+        console.log("Total: $"+ calcularTotal());
+        
+    }
+    function eliminarProducto(){
+        if(carrito.length === 0){
+            alert("El carrito esta vacio")
+            return
+        }
+        mostrarCarrito()
+
+        let indice = parseInt(prompt("Ingrese el numero del producto que dsea eliminar:"))
+        if(indice >= 0  && indice < carrito.length){
+            console.log("Eliminaste "+ carrito[indice].nombre);
+            carrito.splice(indice, 1)            
+        }else{
+            console.log("Indice invalido");
+            
+        }
+
+    }
+    
     function finalizarCompra(){
-        if (carrito === 0){
+        if (carrito.length === 0){
             alert("El carrito esta vacio.")
             return
         }
-        let confirmar = confirm("¿Desea realizar la compra?")
+        let total = calcularTotal()
+        let confirmar = confirm("¿Desea realizar la compra? Total: $"+ total)
         if(confirmar){
-            alert("Compra realizada con Exito. \nTotal a pagar: $"+ carrito)
-            carrito = 0
+            alert("Compra realizada con Exito. \nTotal a pagar: $"+ total)
+            carrito = []
         }else{
             alert("Compra cancelada.")
         }
@@ -39,7 +77,7 @@ if (acceso){
 
     while(continuar){
 
-    let eleccion = prompt("Ingrese alguna de las siguientes opciones para comprar: \n 1)Capacitor \n 2)Enchufe 220V \n 3)Multimetro \n 4)Protoboard \n 5)Diodo LED \n 6)Circuito Integrado \n 7)Soldador \n 8)Estaño \n 9)Ver total \n 10)Vaciar carrito \n 11)Finalizar compra \n 12)Salir")
+    let eleccion = prompt("Ingrese alguna de las siguientes opciones para comprar: \n 1)Capacitor \n 2)Enchufe 220V \n 3)Multimetro \n 4)Protoboard \n 5)Diodo LED \n 6)Circuito Integrado \n 7)Soldador \n 8)Estaño \n 9)Ver total \n 10)Vaciar carrito \n 11)Finalizar compra \n 12)Eliminar Producto \n 13)Salir")
 
     switch(eleccion){
         case '1':
@@ -81,22 +119,26 @@ if (acceso){
             break
         
         case '9':
-            console.log("El total es $"+ carrito);
+            console.log("El total es $"+ calcularTotal());
             break
         case '10':
-            carrito = 0
+            carrito = []
             console.log("Vaciaste el carrito");
             break
 
         case '11':
             finalizarCompra();
             break
+            
         case '12':
+            eliminarProducto()
+            break            
+        case '13':
             console.log("Gracias por utilizar nuestro servicio WEB \n ¡Nos vemos!");
             alert("Saliste de la pagina")
             continuar = false
             break
-        
+            
         default:
             console.log("Opcion no valida"); 
             break
