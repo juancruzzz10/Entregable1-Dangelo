@@ -120,7 +120,7 @@ if (usuario){
             agregarProducto("Soldador", 17000 )
             break
         case '8':
-            let tipo = prompt("¿De que tipo?(rollo/tubo)")
+            let tipo = prompt("¿De que tipo?(rollo $4300/tubo $6000)")
             if (tipo == "rollo"){
                 agregarProducto("Estaño", 4300 )
                 console.log("Agregaste estaño en rollo");
