@@ -1,31 +1,44 @@
+ class Usuario{
+        constructor(nombre, email, edad){
+        this.nombre = nombre
+        this.email = email
+        this.edad = edad
+        }
+    };
+
 function registrarUsuario(){
     let nombre = prompt("Ingrese su nombre:")
-    let apellido = prompt("Ingrese su apellido:")       
+    let email = prompt("Ingrese su email:")       
     let edad = prompt("Ingrese su edad:")
-    if(!nombre || !apellido || isNaN(edad)){
+    if(!nombre || !email || isNaN(edad)){
         alert("Datos Invalidos. Intente nuevamente")
         return null
     }
-    let usuario = {
-        nombre: nombre,
-        apellido: apellido,
-        edad: edad
-    };
+    if(!email.includes("@")){
+    alert("Email invalido")
+    return null
+}
+    let usuario = new Usuario(nombre, email, edad)
+    localStorage.setItem("usuario", JSON.stringify(usuario))
+   
     console.log("Usuario Registrado Correctamente");
     console.log("Nombre: "+ usuario.nombre);
-    console.log("Apellido: "+ usuario.apellido);
+    console.log("email: "+ usuario.email);
     console.log("Edad: "+ usuario.edad);
-    alert("Bienvenido " + usuario.nombre + " " + usuario.apellido + "!");
     return usuario
   
+}
+let usuarioGuardado = JSON.parse(localStorage.getItem("usuario"))
+if (usuarioGuardado){
+    console.log("Usuario recuperado: "+ usuarioGuardado.nombre);
 }
 let usuario = registrarUsuario()
 if (usuario){
     let continuar = true 
     let carrito = []
-    function agregarProducto(nombre, precio){
-        carrito.push({nombre: nombre, precio: precio})
-        console.log("Añadiste un "+ nombre);
+    function agregarProducto(producto){
+        carrito.push(producto)
+        console.log("Añadiste "+ producto.nombre);
     }
 
     function calcularTotal(){
@@ -42,7 +55,7 @@ if (usuario){
             return
         }
         for(let i=0; i < carrito.length; i++){
-            console.log(i +" - "+ carrito[i].nombre + " $"+ carrito[i].precio);
+            console.log(i +" - "+ carrito[i].nombre + " Tipo: " + carrito[i].tipo + " $"+ carrito[i].precio);
         }
         console.log("Total: $"+ calcularTotal());
         
@@ -87,45 +100,59 @@ if (usuario){
         }else{
             alert("Compra cancelada.")
         }
-
+        let seguir = confirm("¿Desea seguir comprando?")
+        if (!seguir){
+            alert("Saliste de la pagina")
+            continuar = false
+        }
     }
-
+    const productos = [
+        {id: 1, nombre: "Capacitor", precio: 10000, tipo: "Componente"},
+        {id: 2, nombre: "Enchufe 220V", precio: 20800, tipo: "Conector"},
+        {id: 3, nombre: "Multimetro", precio: 17300, tipo: "Herramienta"},
+        {id: 4, nombre: "Protoboard", precio: 2600, tipo: "Herramienta"},
+        {id: 5, nombre: "Diodo LED", precio: 88, tipo: "Componente"},
+        {id: 6, nombre: "Circuito Integrado", precio: 1700, tipo: "Componente"},
+        {id: 7, nombre: "Soldador", precio: 17000, tipo: "Herramienta"},
+        {id: 8, nombre: "Estaño en tubo", precio: 4300, tipo: "Material"},
+        {id: 9, nombre: "Estaño en rollo", precio: 6000, tipo: "Material"}
+    ]
     while(continuar){
 
-    let eleccion = prompt("Ingrese alguna de las siguientes opciones para comprar: \n 1)Capacitor $10000 \n 2)Enchufe 220V $20800 \n 3)Multimetro $17300 \n 4)Protoboard $2600 \n 5)Diodo LED $88 \n 6)Circuito Integrado $1700 \n 7)Soldador $17000 \n 8)Estaño \n 9)Ver total \n 10)Vaciar carrito \n 11)Finalizar compra \n 12)Eliminar Producto \n 13)Salir")
+    let eleccion = prompt("Ingrese alguna de las siguientes opciones para comprar: \n 1)Capacitor - $10000 \n 2)Enchufe 220V- $20800 \n 3)Multimetro - $17300 \n 4)Protoboard - $2600 \n 5)Diodo LED - $88 \n 6)Circuito Integrado - $1700 \n 7)Soldador - $17000 \n 8)Estaño \n 9)Ver total \n 10)Vaciar carrito \n 11)Finalizar compra \n 12)Eliminar Producto \n 13)Salir")
 
     switch(eleccion){
         case '1':
-            agregarProducto("Capacitor", 10000 )
+            agregarProducto(productos[0])
             break
 
         case '2':
-            agregarProducto("Enchufe 220V", 20800 )
+            agregarProducto(productos[1] )
             break
 
         case '3':
-            agregarProducto("Multimetro", 17300 )
+            agregarProducto(productos[2])
             break
 
         case '4':
-            agregarProducto("Protoboard", 2600 )
+            agregarProducto(productos[3])
             break
         case '5':
-            agregarProducto("Diodo LED", 88 )
+            agregarProducto(productos[4])
             break
         case '6':
-            agregarProducto("Circuito Integrado", 1700 )
+            agregarProducto(productos[5])
             break
         case '7':
-            agregarProducto("Soldador", 17000 )
+            agregarProducto(productos[6])
             break
         case '8':
             let tipo = prompt("¿De que tipo?(rollo $4300/tubo $6000)")
             if (tipo == "rollo"){
-                agregarProducto("Estaño", 4300 )
+                agregarProducto(productos[7])
                 console.log("Agregaste estaño en rollo");
             }else if (tipo == "tubo"){
-                agregarProducto("Estaño", 6000 )
+                agregarProducto(productos[8])
                 console.log("Agregaste estaño en tubo");
             }else{
                 console.log("Opcion invalida");
@@ -161,6 +188,4 @@ if (usuario){
         
         
     }
-}else{
-    alert("ACCESO DENEGADO.")
 }
