@@ -3,10 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <script defer src="./script.js"></script>
     <title>CoderElectronics</title>  
 </head>
 <body>
-    <h1>CODER_ELECTRONICS</h1>
-    <script src="./script.js"></script>
+    <div id="login-contenedor">
+    <h2>Iniciar Sesión</h2>
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="text" id="email" placeholder="Email">
+    <input type="number" id="edad" placeholder="Edad">
+    <button id="btn-login">Ingresar</button>
+    <p id="mensaje-login"></p>
+    </div>
+
+    
+    <div id="app" class="oculta">
+    <header>
+        <h1>CODER_ELECTRONICS</h1>
+    </header>
+    <main class="contenedor">
+        <section class="productos" id="productos"></section>
+        <aside class="carrito">
+            <h2>Carrito</h2>
+            <div id="lista-carrito"></div>
+            <p id="total">Total: $0</p>
+
+            <button id="vaciar">Vaciar Carrito</button>
+            <button id="comprar">Finalizar Compra</button>
+
+        </aside>
+    </main>
+    <p id="mensaje"></p>
+    </div>
+    
+    
 </body>
 </html>

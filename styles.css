@@ -1,0 +1,129 @@
+body{
+    margin: 0;
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+}
+.oculta{
+
+    display: none;
+}
+
+#login-contenedor{
+    width: 300px;
+    margin: 100px auto;
+    background: #020617;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#login-contenedor input{
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+header{
+    background: #020617;
+    padding: 10px;
+    text-align: center;
+}
+
+.contenedor{  
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.productos{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.card{
+    background: #020617;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #1e293b;
+    transition: transform 0.3s, box-shadow 0.3s;    
+}
+
+.card:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #38bdf8;
+}
+
+.card button{
+    width: 100%;
+    margin-top: 10px;
+    background: #38bdf8;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.carrito{
+    background: #020617;
+    padding: 15px;
+    border-radius: 10px;
+}
+.item{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e293b;
+    padding: 5px 0;
+    animation: aparecer 0.3s ease;
+}
+
+.item button{
+    background: red;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+button{
+    margin-top: 10px;
+    width: 100%;
+    padding: 8px;
+    cursor: pointer;
+}
+
+#mensaje, #mensaje-login{
+    text-align: center;
+    margin-top: 10px;
+    color: #38bdf8;
+
+}
+
+#vaciar{
+    background: red;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+#comprar{
+    background: #38bdf8;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+@keyframes aparecer{
+    from{
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
