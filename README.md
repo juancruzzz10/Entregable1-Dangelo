@@ -2,6 +2,4 @@ Alumno: Juan Cruz D'Angelo
 Comision: 89615
 
 Descripcion del Proyecto
-En este Primer entregable, se propone un e-commerce de venta de Herramientas/Componentes de uso electronico, como un soldador, resistencias , capacitores, etc. 
-Se ingresa con los datos del usuario, para luego poder acceder al menu de compra que consta con 13 opciones, 8 son de productos/herramientas para comprar y luego estan las opciones adicionales como eliminar cosas del carrito
-tambien cuenta con visualizar el carrito, y el respctivo finalizar la compra.
+Sitio web (e-commerce) de venta de productos de indole electronico, secciones de login, compra, carrito, categoria, productos (cada uno con su precio, imagen, descripcion y nombre). Todas las secciones renderizadas y animadas con la libreria anime.js, para las alertas tambien se utiliza la libreria anime y mayoritatiamente la libreria Toastify.js. El sitio es totalmente responsive, incluyendo todos sus objetos, incorporado tambien una seccion de interes, es decir la seccion de "Te podria interesar" que tienen la mayoria de e-commerce, seccion de contactanos con todos los contactos como whatsapp, instagram, correo y telefono, todo completamente funcional. Utilizacion del almacenamiento de la pagina con LocalStorage para guardar el inicio de sesion del usuario.
