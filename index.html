@@ -1,42 +1,354 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoderElectronics - Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./styles.css">
-    <script defer src="./script.js"></script>
-    <title>CoderElectronics</title>  
 </head>
 <body>
-    <div id="login-contenedor">
-    <h2>Iniciar Sesión</h2>
-    <input type="text" id="nombre" placeholder="Nombre">
-    <input type="text" id="email" placeholder="Email">
-    <input type="number" id="edad" placeholder="Edad">
-    <button id="btn-login">Ingresar</button>
-    <p id="mensaje-login"></p>
+
+    <div id="login-pantalla" class="login-bg">
+        <canvas id="matrix-canvas"></canvas>
+        <div id="login-contenedor" class="glass-panel">
+            <div class="login-logo">
+                <i class="fa-solid fa-microchip"></i>
+                <h2>ACCESO AL SISTEMA</h2>
+                <div class="login-scan-line"></div>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="text" id="nombre" placeholder="Nombre completo" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope input-icon"></i>
+                <input type="email" id="email" placeholder="Correo electrónico" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-calendar-days input-icon"></i>
+                <input type="date" id="fecha-nacimiento" placeholder="Fecha de nacimiento">
+                <label class="date-label">Fecha de nacimiento</label>
+            </div>
+            <button id="btn-login" class="btn-neon btn-login-main">
+                <span>INGRESAR</span>
+                <i class="fa-solid fa-right-to-bracket"></i>
+            </button>
+        </div>
     </div>
 
-    
     <div id="app" class="oculta">
-    <header>
-        <h1>CODER_ELECTRONICS</h1>
-    </header>
-    <main class="contenedor">
-        <section class="productos" id="productos"></section>
-        <aside class="carrito">
-            <h2>Carrito</h2>
-            <div id="lista-carrito"></div>
-            <p id="total">Total: $0</p>
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fa-solid fa-bolt logo-icon"></i>
+                    <h1>CODER<span class="logo-accent">_ELECTRONICS</span></h1>
+                </div>
 
-            <button id="vaciar">Vaciar Carrito</button>
-            <button id="comprar">Finalizar Compra</button>
+                <div class="busqueda-container">
+                    <div class="search-wrap">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="buscador" placeholder="Buscar productos...">
+                    </div>
+                </div>
 
+                <div class="user-actions">
+                    <button id="btn-contacto" class="icon-btn" title="Contactanos">
+                        <i class="fa-solid fa-headset"></i>
+                    </button>
+                    <button id="btn-perfil" class="icon-btn" title="Mi Cuenta">
+                        <i class="fa-solid fa-user-astronaut"></i>
+                    </button>
+                    <button id="btn-toggle-carrito" class="icon-btn carrito-btn" title="Carrito">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span id="contador-carrito" class="badge">0</span>
+                        <span class="cart-pulse"></span>
+                    </button>
+                </div>
+            </div>
+
+            
+            <div class="categorias-bar" id="categorias-bar">
+                <div class="categorias-track" id="categorias-track">
+                    <button class="cat-chip activa" data-cat="Todos">
+                        <i class="fa-solid fa-border-all"></i> Todos
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="contenedor">
+            <div class="contenido-principal">
+                <div class="productos-header">
+                    <span id="resultado-count" class="result-count"></span>
+
+                    
+                    <div class="sort-pills" id="sort-pills">
+                        <span class="sort-label"><i class="fa-solid fa-sliders"></i></span>
+                        <button class="sort-pill activo" data-sort="">
+                            <i class="fa-solid fa-grip"></i>
+                            <span>Todos</span>
+                        </button>
+                        <button class="sort-pill" data-sort="precio-asc">
+                            <i class="fa-solid fa-arrow-up-wide-short"></i>
+                            <span>Precio ↑</span>
+                        </button>
+                        <button class="sort-pill" data-sort="precio-desc">
+                            <i class="fa-solid fa-arrow-down-wide-short"></i>
+                            <span>Precio ↓</span>
+                        </button>
+                        <button class="sort-pill" data-sort="nombre-asc">
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                            <span>A → Z</span>
+                        </button>
+                    </div>
+                </div>
+                <section class="productos" id="productos"></section>
+
+                <div class="seccion-similares oculta" id="seccion-similares">
+                    <h3><i class="fa-solid fa-layer-group"></i> Te podría interesar</h3>
+                    <div class="productos" id="productos-similares"></div>
+                </div>
+
+               
+                <section id="seccion-contacto" class="seccion-contacto">
+                    <div class="contacto-grid-bg">
+                        <div class="contacto-scan"></div>
+                    </div>
+
+                    <div class="contacto-header">
+                        <div class="contacto-titulo-wrap">
+                            <span class="contacto-sup-label">// SOPORTE_TÉCNICO</span>
+                            <h2 class="contacto-titulo">
+                                <i class="fa-solid fa-satellite-dish"></i>
+                                CONTACTANOS
+                            </h2>
+                            <p class="contacto-subtitulo">Estamos disponibles de lunes a sábado de 9:00 a 19:00 hs. Respondemos en menos de 2 horas.</p>
+                        </div>
+                        <div class="contacto-status">
+                            <span class="status-dot"></span>
+                            <span>Online ahora</span>
+                        </div>
+                    </div>
+
+                    <div class="contacto-cards">
+
+                        
+                        <a href="https://wa.me/5493512443365?text=Hola!%20Quiero%20consultar%20sobre%20un%20producto." 
+                           target="_blank" class="contacto-card contacto-card--whatsapp">
+                            <div class="cc-glow"></div>
+                            <div class="cc-icon">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div class="cc-body">
+                                <strong>WhatsApp</strong>
+                                <span>+54 9 351 244-3365</span>
+                                <small>Respondemos lo antes posible</small>
+                            </div>
+                            <div class="cc-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+
+                        
+                        <a href="tel:+543512443365" class="contacto-card contacto-card--telefono">
+                            <div class="cc-glow"></div>
+                            <div class="cc-icon">
+                                <i class="fa-solid fa-phone-flip"></i>
+                            </div>
+                            <div class="cc-body">
+                                <strong>Teléfono</strong>
+                                <span>351 2443365</span>
+                                <small>Lun–Sáb 9 a 20 hs</small>
+                            </div>
+                            <div class="cc-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+
+                        
+                        <a href="mailto:ventas@coderelectronics.com.ar" class="contacto-card contacto-card--email">
+                            <div class="cc-glow"></div>
+                            <div class="cc-icon">
+                                <i class="fa-solid fa-envelope-open-text"></i>
+                            </div>
+                            <div class="cc-body">
+                                <strong>Email</strong>
+                                <span>ventas@coderelectronics.com.ar</span>
+                                <small>Respuesta en &lt; 2 horas</small>
+                            </div>
+                            <div class="cc-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+
+                        
+                        <a href="https://instagram.com/juan_dangelo10" target="_blank" class="contacto-card contacto-card--instagram">
+                            <div class="cc-glow"></div>
+                            <div class="cc-icon">
+                                <i class="fa-brands fa-instagram"></i>
+                            </div>
+                            <div class="cc-body">
+                                <strong>Instagram</strong>
+                                <span>@juan_dangelo10</span>
+                                <small>Novedades y proyectos</small>
+                            </div>
+                            <div class="cc-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                        </a>
+
+                    </div>
+
+                    <div class="contacto-footer-info">
+                        <div class="cf-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>Av. Chacabuco 2000, Córdoba, Argentina</span>
+                        </div>
+                        <div class="cf-item">
+                            <i class="fa-solid fa-clock"></i>
+                            <span>Lun a Sáb · 9:00 – 20:00 hs</span>
+                        </div>
+                        <div class="cf-item">
+                            <i class="fa-solid fa-truck-fast"></i>
+                            <span>Envíos a todo el país por Correo Argentino y OCA</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        
+        <aside class="carrito oculta" id="sidebar-carrito">
+            <div class="carrito-header">
+                <h2><i class="fa-solid fa-basket-shopping"></i> Tu Carrito</h2>
+                <button id="btn-cerrar-carrito" class="icon-btn close-cart-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="lista-carrito" class="lista-carrito-scroll"></div>
+
+            <div class="carrito-footer">
+                <p id="total" class="total-precio">Total: $0</p>
+                <div class="acciones-carrito">
+                    <button id="vaciar" class="btn-danger"><i class="fa-solid fa-trash"></i> Vaciar</button>
+                    <button id="comprar" class="btn-success"><i class="fa-solid fa-credit-card"></i> Pagar</button>
+                </div>
+            </div>
         </aside>
-    </main>
-    <p id="mensaje"></p>
     </div>
+
     
+    <div id="modal-overlay" class="oculta">
+
+        
+        <div id="modal-pago" class="modal glass-panel oculta">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-shield-halved"></i> Finalizar Compra</h2>
+                <button class="modal-close-btn" onclick="cerrarModales()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p id="resumen-pago" class="resumen-pago-texto"></p>
+            
+            
+            <div class="metodos-pago-grid" id="metodos-pago-grid">
+                <div class="metodo-card" data-value="debito">
+                    <div class="metodo-icon"><i class="fa-solid fa-credit-card"></i></div>
+                    <div class="metodo-info">
+                        <strong>Débito</strong>
+                        <span class="metodo-descuento">10% OFF</span>
+                    </div>
+                    <div class="metodo-check"><i class="fa-solid fa-check"></i></div>
+                </div>
+                <div class="metodo-card" data-value="credito">
+                    <div class="metodo-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+                    <div class="metodo-info">
+                        <strong>Crédito</strong>
+                        <span class="metodo-descuento">15% OFF</span>
+                    </div>
+                    <div class="metodo-check"><i class="fa-solid fa-check"></i></div>
+                </div>
+                <div class="metodo-card" data-value="transferencia">
+                    <div class="metodo-icon"><i class="fa-solid fa-building-columns"></i></div>
+                    <div class="metodo-info">
+                        <strong>Transferencia</strong>
+                        <span class="metodo-descuento">5% OFF</span>
+                    </div>
+                    <div class="metodo-check"><i class="fa-solid fa-check"></i></div>
+                </div>
+                <div class="metodo-card" data-value="cripto">
+                    <div class="metodo-icon"><i class="fa-brands fa-bitcoin"></i></div>
+                    <div class="metodo-info">
+                        <strong>Cripto</strong>
+                        <span class="metodo-descuento">20% OFF</span>
+                    </div>
+                    <div class="metodo-check"><i class="fa-solid fa-check"></i></div>
+                </div>
+            </div>
+            <input type="hidden" id="metodo-pago" value="">
+
+            <div id="precio-final-display" class="precio-final-display oculta">
+                <span>Total con descuento:</span>
+                <strong id="precio-con-descuento"></strong>
+            </div>
+
+            <div class="modal-acciones">
+                <button id="cancelar-pago" class="btn-danger">Cancelar</button>
+                <button id="confirmar-pago" class="btn-success">Confirmar <i class="fa-solid fa-check"></i></button>
+            </div>
+        </div>
+
+        
+        <div id="modal-perfil" class="modal glass-panel oculta">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-id-card"></i> Perfil de Usuario</h2>
+                <button class="modal-close-btn" onclick="cerrarModales()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="datos-perfil"></div>
+            <div class="modal-acciones mt-10">
+                <button id="cerrar-perfil" class="btn-secundario">Volver</button>
+                <button id="cerrar-sesion" class="btn-danger"><i class="fa-solid fa-power-off"></i> Cerrar Sesión</button>
+            </div>
+        </div>
+
+        
+        <div id="modal-producto" class="modal glass-panel oculta modal-producto-grande">
+            <div class="modal-header">
+                <h2 id="modal-prod-nombre"></h2>
+                <button class="modal-close-btn" onclick="cerrarModales()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-prod-body">
+                <div class="modal-prod-img-wrap">
+                    <img id="modal-prod-img" src="" alt="">
+                    <span id="modal-prod-tipo" class="tipo-badge"></span>
+                </div>
+                <div class="modal-prod-detalles">
+                    <p id="modal-prod-desc" class="modal-desc-texto"></p>
+                    <div class="modal-prod-precio-wrap">
+                        <span class="modal-precio-label">Precio</span>
+                        <span id="modal-prod-precio" class="modal-precio-valor"></span>
+                    </div>
+                    <button id="modal-btn-agregar" class="btn-neon btn-agregar-modal">
+                        <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     
+    <div id="toast-container" class="toast-container"></div>
+
+    
+    <div id="easter-egg-bot" class="easter-bot oculta">
+        <div class="bot-body">
+            <div class="bot-head">
+                <div class="bot-eye left"></div>
+                <div class="bot-eye right"></div>
+                <div class="bot-mouth"></div>
+            </div>
+            <div class="bot-torso">
+                <div class="bot-antenna"></div>
+            </div>
+        </div>
+        <div class="bot-speech oculta" id="bot-speech"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script defer src="./script.js"></script>
 </body>
 </html>
